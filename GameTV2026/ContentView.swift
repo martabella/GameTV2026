@@ -18,13 +18,7 @@ struct ContentView: View {
                     .kerning(-1)
                     .fontWeight(.bold)
                 
-                HStack{
-                    Text("1")
-                        .fontWeight(.bold)
-                    Slider(value: $sliderValue, in: 1...100, step: 1)
-                    Text("100")
-                        .fontWeight(.bold)
-                }
+                SliderView(value: $sliderValue, minValue: 1, maxValue: 100)
                 Text("\(sliderValue)")
                 Button("TRY"){
                     alertIsVisible = true
@@ -44,6 +38,22 @@ struct ContentView: View {
          actions: { Button("Got it"){print("Got it tapped")}},
         message: {Text("The slider value is \(Int(sliderValue))")}
         )
+    }
+}
+
+struct SliderView : View{
+    @Binding var value: Double
+    var minValue:Double
+    var maxValue:Double
+    
+    var body: some View{
+        HStack{
+            Text("\(Int(minValue))")
+                .fontWeight(.bold)
+            Slider(value: $value, in: minValue...maxValue, step: 1)
+            Text("\(Int(maxValue))")
+                .fontWeight(.bold)
+        }
     }
 }
 
