@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var alertIsVisible = false
+    @State private var sliderValue = 50.0
+    
     var body: some View {
         ZStack{
             Color("BackgroundColor").ignoresSafeArea()
@@ -17,12 +21,13 @@ struct ContentView: View {
                 HStack{
                     Text("1")
                         .fontWeight(.bold)
-                    Slider(value: .constant(20), in: 1...100, step: 1)
+                    Slider(value: $sliderValue, in: 1...100, step: 1)
                     Text("100")
                         .fontWeight(.bold)
                 }
+                Text("\(sliderValue)")
                 Button("TRY"){
-                    print("button tapped")
+                    alertIsVisible = true
                 }
                 .font(.title3)
                 .foregroundStyle(Color.white)
@@ -34,6 +39,11 @@ struct ContentView: View {
             }
             .padding()
         }
+        .alert("Congratulations",
+         isPresented: $alertIsVisible,
+         actions: { Button("Got it"){print("Got it tapped")}},
+        message: {Text("The slider value is \(Int(sliderValue))")}
+        )
     }
 }
 
