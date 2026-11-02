@@ -5,6 +5,8 @@ struct ContentView: View {
     @State private var alertIsVisible = false
     @State private var sliderValue = 50.0
     
+    @State private var game = Game()
+    
     var body: some View {
         ZStack{
             Color("BackgroundColor").ignoresSafeArea()
@@ -13,7 +15,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                Text("89")
+                Text("\(game.target)")
                     .font(.largeTitle)
                     .kerning(-1)
                     .fontWeight(.bold)
@@ -21,6 +23,7 @@ struct ContentView: View {
                 SliderView(value: $sliderValue, minValue: 1, maxValue: 100)
                 Text("\(sliderValue)")
                 Button("TRY"){
+                    game.calculatePoints(sliderValue: sliderValue)
                     alertIsVisible = true
                 }
                 .font(.title3)
@@ -36,7 +39,7 @@ struct ContentView: View {
         .alert("Congratulations",
          isPresented: $alertIsVisible,
          actions: { Button("Got it"){print("Got it tapped")}},
-        message: {Text("The slider value is \(Int(sliderValue))")}
+               message: {Text("The slider value is \(Int(sliderValue)) and your points are \(game.points)")}
         )
     }
 }
