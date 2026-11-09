@@ -9,7 +9,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-            Color("BackgroundColor").ignoresSafeArea()
+            BackgroundView().ignoresSafeArea()
             VStack{
                 Text("GUESS THE NUMBER")
                     .font(.largeTitle)
