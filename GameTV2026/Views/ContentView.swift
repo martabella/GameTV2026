@@ -9,7 +9,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-            BackgroundView().ignoresSafeArea()
+            BackgroundView(game: $game)
             VStack{
                 Text("GUESS THE NUMBER")
                     .font(.largeTitle)
@@ -40,7 +40,7 @@ struct ContentView: View {
          isPresented: $alertIsVisible,
                actions: {
             Button("Got it"){
-                game.startNewGame()
+                game.startNewRound()
                 self.sliderValue = Double(Game.minValue)
             }
         },

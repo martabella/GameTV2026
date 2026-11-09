@@ -1,20 +1,28 @@
 import SwiftUI
 
 struct BackgroundView: View {
+    
+    @Binding var game: Game
+    
     var body: some View {
         ZStack{
-            Color("BackgroundColor")
+            Color("BackgroundColor").ignoresSafeArea()
             VStack{
                 HStack{
-                    SymbolView(symbolName: "arrow.clockwise")
+                    Button(action: {
+                        game.startNewGame()
+                    }, label: {
+                        SymbolView(symbolName: "arrow.clockwise")
+                    }).foregroundStyle(.primary)
+                    
                     Spacer()
                     SymbolView(symbolName: "list.dash")
                 }
                 Spacer()
                 HStack{
-                    NumberView(text: "SCORE", value: 0)
+                    NumberView(text: "SCORE", value: game.score)
                     Spacer()
-                    NumberView(text: "ROUND", value: 0)
+                    NumberView(text: "ROUND", value: game.rounds)
                 }
             }.padding()
         }
@@ -22,5 +30,5 @@ struct BackgroundView: View {
 }
 
 #Preview {
-    BackgroundView()
+    BackgroundView(game: .constant(Game()))
 }
