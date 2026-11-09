@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var alertIsVisible = false
-    @State private var sliderValue = 50.0
+    @State private var sliderValue = Double(Game.minValue)
     
     @State private var game = Game()
     
@@ -20,7 +20,7 @@ struct ContentView: View {
                     .kerning(-1)
                     .fontWeight(.bold)
                 
-                SliderView(value: $sliderValue, minValue: 1, maxValue: 100)
+                SliderView(value: $sliderValue, minValue: Double(Game.minValue), maxValue: Double(Game.maxValue))
                 Text("\(sliderValue)")
                 Button("TRY"){
                     game.calculatePoints(sliderValue: sliderValue)
@@ -38,7 +38,12 @@ struct ContentView: View {
         }
         .alert("Congratulations",
          isPresented: $alertIsVisible,
-         actions: { Button("Got it"){print("Got it tapped")}},
+               actions: {
+            Button("Got it"){
+                game.startNewGame()
+                self.sliderValue = Double(Game.minValue)
+            }
+        },
                message: {Text("The slider value is \(Int(sliderValue)) and your points are \(game.points)")}
         )
     }
