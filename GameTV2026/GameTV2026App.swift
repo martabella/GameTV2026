@@ -11,7 +11,7 @@ import SwiftUI
 struct GameTV2026App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environment(GameStore())
         }
     }
 }

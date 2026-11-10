@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct BackgroundView: View {
+
+    @Environment(GameStore.self) var gameStore
     
-    @Binding var game: Game
+    @State private var showSheet = false
     
     var body: some View {
         ZStack{
@@ -10,25 +12,33 @@ struct BackgroundView: View {
             VStack{
                 HStack{
                     Button(action: {
-                        game.startNewGame()
+                        gameStore.intentResetGame()
                     }, label: {
                         SymbolView(symbolName: "arrow.clockwise")
                     }).foregroundStyle(.primary)
                     
                     Spacer()
-                    SymbolView(symbolName: "list.dash")
+                    Button(action: {
+                        showSheet = true
+                    }, label: {
+                        SymbolView(symbolName: "list.dash")
+                    }).foregroundStyle(.primary)
+                    
                 }
                 Spacer()
                 HStack{
-                    NumberView(text: "SCORE", value: game.score)
+                    NumberView(text: "SCORE", value: gameStore.game.score)
                     Spacer()
-                    NumberView(text: "ROUND", value: game.rounds)
+                    NumberView(text: "ROUND", value: gameStore.game.rounds)
                 }
             }.padding()
+        }
+        .sheet(isPresented: $showSheet){
+            MarksView()
         }
     }
 }
 
 #Preview {
-    BackgroundView(game: .constant(Game()))
+    BackgroundView().environment(GameStore())
 }
